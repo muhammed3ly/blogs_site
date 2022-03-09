@@ -88,5 +88,5 @@ def getPosts(request):
 
 def post_detail(request, slug):
     return render(request, 'blogs/post-detail.html', {
-        'post': next((post for post in posts if post['slug'] == slug), None)
+        'post': next(post for post in posts if post['slug'] == slug)
     })
