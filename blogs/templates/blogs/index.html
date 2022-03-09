@@ -5,19 +5,13 @@
 {% endblock page_title %}
 {% block css_file %}
     <link rel='stylesheet' href={% static 'blogs/index.css' %}>
+    <link rel='stylesheet' href = {% static 'blogs/post.css' %}>
 {% endblock css_file %}
 {% block content %}
-    <header id='main-navigation'>
-        <h1>
-            <a href=''>Blog++</a>
-        </h1>
-        <nav>
-            <a href={% url 'posts' %}>All Posts</a>
-        </nav>
-    </header>
     <section id='welcome'>
         <header>
-            <img src='' alt='Muhammed - The author of this site'>
+            <img src={% static 'blogs/images/muhammed.jpg' %}
+                 alt='Muhammed - The author of this site'>
             <h2>Muhammed's Blog</h2>
         </header>
         <p>
@@ -27,21 +21,9 @@
     <section id='latest-posts'>
         <h2>My Latest Thoughts</h2>
         <ul>
-            <li>
-                <article class='post'>
-                    <a href="">
-                        <img src="" alt="Mountain Hiking" />
-                        <div class='post__content'>
-                            <h3>Mountain Hiking</h3>
-                            <p>
-                                There's nothing like the views you get when hiking in the
-                                mountains! And I wasn't even prepared for what happened whilst I
-                                was enjoying the view!
-                            </p>
-                        </div>
-                    </a>
-                </article>
-            </li>
+            {% for post in  posts%}
+                {% include 'blogs/includes/post.html'%}
+            {% endfor %}
         </ul>
     </section>
     <section id="about">
