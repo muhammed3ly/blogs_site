@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}
+    Read Later Posts
+{% endblock page_title %}
+
+{% block css_file %}
+<link rel="stylesheet" href={% static 'blogs/post.css' %}>
+<link rel="stylesheet" href={% static 'blogs/read-later.css' %}>
+{% endblock css_file %}
+{% block content %}
+    <section id='read-later-posts'>
+        <ul>
+            {% for post in posts %}
+                {% include 'blogs/includes/post.html'%}
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock content %}

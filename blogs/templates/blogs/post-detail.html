@@ -12,9 +12,21 @@
 
     <section id = 'summary'>
         <h2>{{post.title}}</h2>
+        <div>
+            {% for tag in tags %}
+                <span class='tag'>{{tag.caption}}</span>
+            {% endfor %}
+        </div>
+        <div id='read-later'>
+            <form action={% url 'read-later' %} method='POST'>
+                {% csrf_token %}
+                <input type="hidden" name='post_id' value={{post.id}}>
+                <button>Read Later</button>
+            </form>
+        </div>
         <article>
-            <img src={% static 'blogs/images/'|add:post.image %} alt={{post.title}}>
-            <address>By {{post.author}}</address>
+            <img src={{ post.image.url }} alt={{post.title}}>
+            <address>By <a href="mailto:{{post.email}}"  target="_blank" >{{post.author}}</a></address>
             <div>
                 Last updated on <date>{{post.date}}</date>
             </div>
@@ -26,4 +38,30 @@
             {{post.content|linebreaks}}
         </p>
     </main>
+
+    <section id='comments'>
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <h2>{{ comment.userName }}</h2>
+                    <p>{{ comment.text|linebreaks }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id = 'comment-form'>
+        <h2>Your Comment</h2>
+        <form action={% url 'post-detail' post.slug %} method='POST'>
+            {% csrf_token %}
+            {% for field in form %}
+            <div class = 'form-control'>
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+            {% endfor %}
+            <button>Save Comment</button>
+        </form>
+    </section>
 {% endblock content %}
